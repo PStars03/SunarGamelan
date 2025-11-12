@@ -1,29 +1,37 @@
 body {
   font-family: "Poppins", sans-serif;
 }
-.hero {
-  background-image: url("../img/bg.jpg");
+.carousel-item {
+  margin-top: 8vh;
+  height: 80vh;
+  min-height: 400px;
   background-size: cover;
   background-position: center;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  text-align: center;
   position: relative;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
 }
-.hero::before {
+.carousel-caption {
+  position: absolute;
+  bottom: 40%;
+  z-index: 2;
+}
+.carousel-caption h1 {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.8);
+}
+.carousel-caption p {
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.6);
+}
+.carousel::before {
   content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.hero-content {
-  position: relative;
+  background-color: rgba(0, 0, 0, 0.5);
   z-index: 1;
 }
 .gallery img {
