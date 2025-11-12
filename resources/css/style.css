@@ -55,3 +55,10 @@ footer {
   background-color: #daa520;
   color: white;
 }
+
+.pp {
+  width: 190px;
+  height: 155px;
+  background-position: center;
+  background-color: #000000;
+}
