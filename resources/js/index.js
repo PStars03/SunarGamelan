@@ -34,28 +34,47 @@ window.addEventListener("scroll", function () {
 
   const dots = dotsContainer.children;
 
+  function updateDots(i) {
+    [...dots].forEach((d, idx) => {
+      d.setAttribute("aria-selected", idx === i ? "true" : "false");
+    });
+  }
+
   function show(i) {
     slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
     current = i;
+    updateDots(i);
   }
+
   function next() {
     show((current + 1) % slides.length);
   }
+
+  function prev() {
+    show((current - 1 + slides.length) % slides.length);
+  }
+
   function goTo(i) {
     show(i);
     resetAutoplay();
   }
+
   function startAutoplay() {
     stopAutoplay();
     interval = setInterval(next, AUTOPLAY_MS);
   }
+
   function stopAutoplay() {
     if (interval) clearInterval(interval);
   }
+
   function resetAutoplay() {
     stopAutoplay();
     startAutoplay();
   }
+
+  if (prevBtn) prevBtn.addEventListener("click", prev);
+  if (nextBtn) nextBtn.addEventListener("click", next);
 
   slider.addEventListener("mouseenter", stopAutoplay);
   slider.addEventListener("mouseleave", startAutoplay);
@@ -65,7 +84,8 @@ window.addEventListener("scroll", function () {
 
 // ===================== AMBIL DATA GOOGLE SHEET =====================
 (function () {
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
+  const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
 
   function parseGViz(text) {
     const json = JSON.parse(text.substr(47).slice(0, -2));
@@ -212,15 +232,22 @@ function isiDropdownKategori() {
 
 // =============== EVENT LISTENER ===============
 function setupFilterListeners() {
-  document.getElementById("filterKategori")?.addEventListener("change", applyFilters);
-  document.getElementById("searchInput")?.addEventListener("input", applyFilters);
-  document.getElementById("sortSelect")?.addEventListener("change", applyFilters);
+  document
+    .getElementById("filterKategori")
+    ?.addEventListener("change", applyFilters);
+  document
+    .getElementById("searchInput")
+    ?.addEventListener("input", applyFilters);
+  document
+    .getElementById("sortSelect")
+    ?.addEventListener("change", applyFilters);
 }
 
 // =============== FILTER ENGINE ===============
 function applyFilters() {
   const kategori = document.getElementById("filterKategori")?.value || "";
-  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+  const searchTerm =
+    document.getElementById("searchInput")?.value.toLowerCase() || "";
   const sortType = document.getElementById("sortSelect")?.value || "az";
 
   filteredItems = allItems.filter((item) => {
@@ -250,7 +277,9 @@ function renderFiltered() {
 
   if (containerIndex) {
     containerIndex.innerHTML = "";
-    filteredItems.slice(0, 6).forEach((item) => createGalleryCard(item, containerIndex));
+    filteredItems
+      .slice(0, 6)
+      .forEach((item) => createGalleryCard(item, containerIndex));
   }
 
   if (containerFull) {
@@ -297,7 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
   toggle?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
 
-    if (document.body.classList.contains("dark")) localStorage.setItem("darkMode", "on");
+    if (document.body.classList.contains("dark"))
+      localStorage.setItem("darkMode", "on");
     else localStorage.setItem("darkMode", "off");
   });
 });
