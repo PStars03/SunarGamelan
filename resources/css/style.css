@@ -1,3 +1,9 @@
+:root {
+  --hero-height: 80vh;
+  --overlay-bg: rgba(0, 0, 0, 0.35);
+  --accent: rgba(184, 134, 11, 1); /* gold-ish */
+}
+
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -104,38 +110,154 @@ footer {
   background-color: #daa520;
   color: white;
 }
-
-.pp {
-  width: 190px;
-  height: 155px;
-  background-position: center;
-  background-color: #000000;
-}
-
-.pembatas {
-  display: block;
-  position: relative;
-  top: -60px;
-}
-
-.hg {
+.hero {
   position: relative;
   overflow: hidden;
+  height: var(--hero-height);
+  /* margin-top: 100px; */
 }
 
-.hero-bottom-gradient {
-  position: absolute;
-  bottom: 0;
-  left: 0;
+.hero__slides {
+  height: 100%;
   width: 100%;
-  height: 160px; /* atur tinggi overlap */
+  position: relative;
+}
+
+/* Slide */
+.hero__slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.hero__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Active slide */
+.hero__slide[aria-hidden="false"],
+.hero__slide.active {
+  opacity: 1;
+  transform: none;
+  z-index: 1;
+}
+
+/* Overlay content */
+.hero__overlay {
+  position: absolute;
+  left: 6%;
+  bottom: 12%;
+  max-width: 56ch;
   background: linear-gradient(
-    to bottom,
-    rgba(0, 0, 0, 0.4) 0%,
-    /* hitam transparan di atas */ rgba(0, 0, 0, 0.6) 30%,
-    /* makin gelap */ rgba(184, 134, 11, 0.6) 70%,
-    /* masuk ke emas */ rgba(184, 134, 11, 1) 100%
+    180deg,
+    transparent 0%,
+    var(--overlay-bg) 30%,
+    var(--overlay-bg) 100%
   );
-  z-index: 3; /* berada di atas gambar */
-  pointer-events: none; /* tidak mengganggu klik tombol carousel */
+  color: #fff;
+  padding: 1.5rem 1.5rem;
+  border-radius: 10px;
+  backdrop-filter: blur(3px);
+}
+
+.hero__title {
+  margin: 0 0 0.25rem 0;
+  font-size: clamp(1.4rem, 3.2vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: 0.6px;
+}
+
+.hero__subtitle {
+  margin: 0 0 1rem 0;
+  font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+  color: #f3e8d0;
+}
+
+/* CTA */
+.hero__cta {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Controls */
+.hero__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: rgba(0, 0, 0, 0.35);
+  color: #fff;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.25rem;
+  transition: background 0.2s;
+  z-index: 3;
+}
+.hero__btn:hover {
+  background: rgba(0, 0, 0, 0.6);
+}
+.hero__btn:active {
+  transform: translateY(-50%) scale(0.98);
+}
+.hero__btn--prev {
+  left: 1rem;
+}
+.hero__btn--next {
+  right: 1rem;
+}
+
+/* Dots */
+.hero__dots {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 3;
+}
+.hero__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+}
+.hero__dot[aria-selected="true"] {
+  width: 40px;
+  border-radius: 999px;
+  background: var(--accent);
+  transition: width 0.25s;
+}
+
+/* Responsive: place overlay centrally on small screens */
+@media (max-width: 768px) {
+  .hero__overlay {
+    left: 50%;
+    bottom: 8%;
+    transform: translateX(-50%);
+    max-width: 90%;
+    text-align: center;
+  }
+  .hero__btn {
+    display: none;
+  } /* hide arrows on small */
 }
