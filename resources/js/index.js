@@ -1,12 +1,14 @@
+// ===================== NAVBAR SCROLL =====================
+
 window.addEventListener("scroll", function () {
   const navbar = document.querySelector(".navbar");
-  if (window.scrollY > 50) {
-    navbar.classList.add("scrolled");
-  } else {
-    navbar.classList.remove("scrolled");
+  if (navbar) {
+    if (window.scrollY > 50) navbar.classList.add("scrolled");
+    else navbar.classList.remove("scrolled");
   }
 });
 
+// ===================== HERO SLIDER =====================
 (function () {
   const slider = document.querySelector("#hero");
   if (!slider) return;
@@ -19,202 +21,283 @@ window.addEventListener("scroll", function () {
   let current = 0;
   let interval = null;
   const AUTOPLAY_MS = 4500;
-  const TRANSITION_MS = 600;
 
-  // initialize slides and dots
   slides.forEach((s, i) => {
-    s.setAttribute("role", "group");
-    s.setAttribute("aria-roledescription", "slide");
-    s.setAttribute("aria-hidden", i === 0 ? "false" : "true");
-    if (i === 0) s.classList.add("active");
+    s.classList.toggle("active", i === 0);
 
     const dot = document.createElement("button");
     dot.className = "hero__dot";
-    dot.setAttribute("aria-label", "Go to slide " + (i + 1));
-    dot.setAttribute("role", "tab");
-    dot.setAttribute("aria-selected", i === 0 ? "true" : "false");
     dot.dataset.index = i;
     dot.addEventListener("click", () => goTo(i));
     dotsContainer.appendChild(dot);
   });
 
-  const dots = Array.from(dotsContainer.children);
+  const dots = dotsContainer.children;
 
-  function show(index) {
-    slides.forEach((s, i) => {
-      const active = i === index;
-      s.classList.toggle("active", active);
-      s.setAttribute("aria-hidden", active ? "false" : "true");
-      dots[i].setAttribute("aria-selected", active ? "true" : "false");
-    });
-    current = index;
+  function show(i) {
+    slides.forEach((s, idx) => s.classList.toggle("active", idx === i));
+    current = i;
   }
-
   function next() {
     show((current + 1) % slides.length);
-  }
-  function prev() {
-    show((current - 1 + slides.length) % slides.length);
   }
   function goTo(i) {
     show(i);
     resetAutoplay();
   }
-
-  // Autoplay
   function startAutoplay() {
     stopAutoplay();
     interval = setInterval(next, AUTOPLAY_MS);
   }
   function stopAutoplay() {
-    if (interval) {
-      clearInterval(interval);
-      interval = null;
-    }
+    if (interval) clearInterval(interval);
   }
   function resetAutoplay() {
     stopAutoplay();
     startAutoplay();
   }
 
-  // Controls
-  nextBtn?.addEventListener("click", () => {
-    next();
-    resetAutoplay();
-  });
-  prevBtn?.addEventListener("click", () => {
-    prev();
-    resetAutoplay();
-  });
-
-  // Pause on hover/focus
   slider.addEventListener("mouseenter", stopAutoplay);
   slider.addEventListener("mouseleave", startAutoplay);
-  slider.addEventListener("focusin", stopAutoplay);
-  slider.addEventListener("focusout", startAutoplay);
 
-  // Keyboard navigation
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") {
-      next();
-      resetAutoplay();
-    }
-    if (e.key === "ArrowLeft") {
-      prev();
-      resetAutoplay();
-    }
-  });
-
-  // Touch / swipe support
-  let touchStartX = 0;
-  let touchEndX = 0;
-  slider.addEventListener(
-    "touchstart",
-    (e) => {
-      stopAutoplay();
-      touchStartX = e.changedTouches[0].screenX;
-    },
-    { passive: true }
-  );
-  slider.addEventListener(
-    "touchend",
-    (e) => {
-      touchEndX = e.changedTouches[0].screenX;
-      handleGesture();
-      startAutoplay();
-    },
-    { passive: true }
-  );
-  function handleGesture() {
-    const dx = touchEndX - touchStartX;
-    const threshold = 40; // minimal px to count as swipe
-    if (Math.abs(dx) > threshold) {
-      if (dx < 0) next();
-      else prev();
-    }
-  }
-
-  // Start
   startAutoplay();
-
-  // accessibility: allow images to be focusable for screen readers
-  slides.forEach((s) => {
-    const img = s.querySelector("img");
-    if (img) img.setAttribute("role", "img");
-  });
 })();
 
-// === GALERI DARI GOOGLE SHEET TANPA TABLETOP (CSV FETCH) === //
+// ===================== AMBIL DATA GOOGLE SHEET =====================
 (function () {
-  const SHEET_CSV_URL =
-    "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/edit?usp=sharing";
+  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
 
-  const LOCAL_IMAGE_PREFIX = "../resources/img/";
-  const CONTAINER_ID = "galeri-penampilan";
-
-  function escapeHtml(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;")
-      .replace(/'/g, "&#039;");
-  }
-
-  function renderGallery(items) {
-    const container = document.getElementById(CONTAINER_ID);
-    if (!container) return;
-
-    container.innerHTML = "";
-
-    items.forEach((item) => {
-      const no = item.no;
-      const title = item.judul || "Tanpa Judul";
-      let img = (item.image || "").trim();
-      const desc = item.deskripsi || "";
-
-      if (!img) img = LOCAL_IMAGE_PREFIX + "bg.jpg";
-      else if (!/^https?:\/\//i.test(img)) img = LOCAL_IMAGE_PREFIX + img;
-
-      const col = document.createElement("div");
-      col.className = "col-12 col-sm-6 col-md-4 col-lg-3";
-
-      col.innerHTML = `
-        <div class="card h-100 shadow-sm border-0">
-          <img src="${img}" class="card-img-top" alt="${escapeHtml(title)}" />
-          <div class="card-body">
-            <h5 class="card-title fw-bold">${escapeHtml(title)}</h5>
-            <p class="card-text">${escapeHtml(desc)}</p>
-          </div>
-        </div>
-      `;
-
-      container.appendChild(col);
-    });
-  }
-
-  function csvToJson(csv) {
-    const lines = csv.split("\n");
-    const headers = lines[0].split(",").map((h) => h.trim());
-
-    return lines.slice(1).map((line) => {
-      const values = line.split(",");
+  function parseGViz(text) {
+    const json = JSON.parse(text.substr(47).slice(0, -2));
+    const cols = json.table.cols.map((c) => c.label.toLowerCase());
+    return json.table.rows.map((row) => {
       const obj = {};
-      headers.forEach((h, i) => (obj[h] = values[i]));
+      row.c.forEach((cell, i) => {
+        obj[cols[i]] = cell ? cell.v : "";
+      });
       return obj;
     });
   }
 
-  async function init() {
+  async function initGallery() {
     try {
-      const res = await fetch(SHEET_CSV_URL);
-      const csv = await res.text();
-      const items = csvToJson(csv);
-      renderGallery(items);
+      const res = await fetch(SHEET_URL);
+      const text = await res.text();
+      const items = parseGViz(text);
+
+      window.ALL_GALLERY_ITEMS = items;
+
+      if (document.getElementById("galeri-penampilan")) {
+        renderLimitedGallery(items);
+      }
+
+      if (document.getElementById("all-gallery")) {
+        initGalleryFeatures(); // filter + search + sort aktif
+        loadFullGallery(); // render galeri full
+      }
     } catch (err) {
-      console.error("CSV ERROR:", err);
+      console.error("GViz Error:", err);
     }
   }
 
-  document.addEventListener("DOMContentLoaded", init);
+  document.addEventListener("DOMContentLoaded", initGallery);
 })();
+
+// ===================== RENDERING GALERI (INDEX) =====================
+
+function renderLimitedGallery(data) {
+  const container = document.getElementById("galeri-penampilan");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const LIMIT = 6;
+  data.slice(0, LIMIT).forEach((item) => createGalleryCard(item, container));
+
+  const btn = document.getElementById("lihat-selengkapnya");
+  if (btn) {
+    if (data.length > LIMIT) btn.classList.remove("d-none");
+    else btn.classList.add("d-none");
+  }
+}
+
+// ===================== PAGINATION (GALERI.HTML) =====================
+let CURRENT_PAGE = 1;
+const ITEMS_PER_PAGE = 15;
+
+function loadFullGallery() {
+  const container = document.getElementById("all-gallery");
+  if (!container) return;
+
+  const items = window.ALL_GALLERY_ITEMS || [];
+  const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+
+  // ===== Render Galeri =====
+  const start = (CURRENT_PAGE - 1) * ITEMS_PER_PAGE;
+  const end = start + ITEMS_PER_PAGE;
+
+  container.innerHTML = "";
+  items.slice(start, end).forEach((item) => createGalleryCard(item, container));
+
+  // ===== Render Pagination Numbers =====
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  // Previous Button
+  pagination.innerHTML += `
+    <li class="page-item ${CURRENT_PAGE === 1 ? "disabled" : ""}">
+      <a class="page-link" href="#" data-page="prev">Previous</a>
+    </li>
+  `;
+
+  // Number Buttons
+  for (let i = 1; i <= totalPages; i++) {
+    pagination.innerHTML += `
+      <li class="page-item ${i === CURRENT_PAGE ? "active" : ""}">
+        <a class="page-link" href="#" data-page="${i}">${i}</a>
+      </li>
+    `;
+  }
+
+  // Next Button
+  pagination.innerHTML += `
+    <li class="page-item ${CURRENT_PAGE === totalPages ? "disabled" : ""}">
+      <a class="page-link" href="#" data-page="next">Next</a>
+    </li>
+  `;
+
+  // ===== Pagination Click Handler =====
+  pagination.querySelectorAll(".page-link").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const page = btn.dataset.page;
+
+      if (page === "prev" && CURRENT_PAGE > 1) CURRENT_PAGE--;
+      else if (page === "next" && CURRENT_PAGE < totalPages) CURRENT_PAGE++;
+      else if (!isNaN(page)) CURRENT_PAGE = Number(page);
+
+      loadFullGallery();
+    });
+  });
+}
+
+let allItems = [];
+let filteredItems = [];
+
+// Dipanggil setelah data Sheet siap
+function initGalleryFeatures() {
+  allItems = window.ALL_GALLERY_ITEMS || [];
+  filteredItems = [...allItems];
+
+  isiDropdownKategori();
+  setupFilterListeners();
+  applyFilters();
+}
+
+// =============== ISI KATEGORI ===============
+function isiDropdownKategori() {
+  const select = document.getElementById("filterKategori");
+  if (!select) return;
+
+  const kategoriUnik = [...new Set(allItems.map((i) => i.kategori))];
+
+  kategoriUnik.forEach((k) => {
+    const opt = document.createElement("option");
+    opt.value = k;
+    opt.textContent = k;
+    select.appendChild(opt);
+  });
+}
+
+// =============== EVENT LISTENER ===============
+function setupFilterListeners() {
+  document.getElementById("filterKategori")?.addEventListener("change", applyFilters);
+  document.getElementById("searchInput")?.addEventListener("input", applyFilters);
+  document.getElementById("sortSelect")?.addEventListener("change", applyFilters);
+}
+
+// =============== FILTER ENGINE ===============
+function applyFilters() {
+  const kategori = document.getElementById("filterKategori")?.value || "";
+  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+  const sortType = document.getElementById("sortSelect")?.value || "az";
+
+  filteredItems = allItems.filter((item) => {
+    const cocokKategori = kategori === "" || item.kategori === kategori;
+    const cocokSearch = item.judul.toLowerCase().includes(searchTerm);
+    return cocokKategori && cocokSearch;
+  });
+
+  // sorting
+  if (sortType === "az") {
+    filteredItems.sort((a, b) => a.judul.localeCompare(b.judul));
+  } else if (sortType === "za") {
+    filteredItems.sort((a, b) => b.judul.localeCompare(a.judul));
+  } else if (sortType === "newest") {
+    filteredItems.sort((a, b) => b.no - a.no);
+  } else if (sortType === "oldest") {
+    filteredItems.sort((a, b) => a.no - b.no);
+  }
+
+  renderFiltered();
+}
+
+// =============== RENDER (INDEX + GALERI.HTML) ===============
+function renderFiltered() {
+  const containerIndex = document.getElementById("galeri-penampilan");
+  const containerFull = document.getElementById("all-gallery");
+
+  if (containerIndex) {
+    containerIndex.innerHTML = "";
+    filteredItems.slice(0, 6).forEach((item) => createGalleryCard(item, containerIndex));
+  }
+
+  if (containerFull) {
+    containerFull.innerHTML = "";
+    filteredItems.forEach((item) => createGalleryCard(item, containerFull));
+  }
+}
+
+// ===================== TEMPLATE CARD + MODAL =====================
+
+function createGalleryCard(item, container) {
+  if (!item) return;
+
+  const col = document.createElement("div");
+  col.classList.add("col-12", "col-sm-6", "col-lg-4", "mb-4");
+
+  col.innerHTML = `
+    <div class="card shadow-sm gallery-card" style="cursor:pointer;">
+      <img src="${item.image}" class="card-img-top" style="height:250px; object-fit:cover;">
+      <div class="card-body text-center">
+        <h5 class="card-title">${item.judul}</h5>
+      </div>
+    </div>
+  `;
+
+  col.addEventListener("click", () => {
+    document.getElementById("modal-title").textContent = item.judul;
+    document.getElementById("modal-image").src = item.image;
+    document.getElementById("modal-desc").textContent = item.deskripsi;
+
+    new bootstrap.Modal(document.getElementById("galleryModal")).show();
+  });
+
+  container.appendChild(col);
+}
+
+// ========== DARK MODE ==========
+document.addEventListener("DOMContentLoaded", () => {
+  const toggle = document.getElementById("toggle-dark");
+  const saved = localStorage.getItem("darkMode");
+
+  if (saved === "on") document.body.classList.add("dark");
+
+  toggle?.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) localStorage.setItem("darkMode", "on");
+    else localStorage.setItem("darkMode", "off");
+  });
+});
