@@ -424,14 +424,21 @@ footer {
 /* ---------- MAX 576px (HP) ---------- */
 @media (max-width: 576px) {
   :root {
-    --hero-height: 50vh;
+    --hero-height: 40vh;
   }
 
   .hero__overlay {
-    width: 60vh;
-    height: 10vh;
-    bottom: 20%;
-    padding: 0.9rem 1rem;
+    width: 95%;
+    max-width: 95%;
+    bottom: 12%;
+    padding: 1rem 1.2rem;
+    height: auto;
+    transform: translateX(-50%);
+    border-radius: 14px;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
   }
 
   .hero__title {
@@ -439,9 +446,13 @@ footer {
   }
 
   .hero__subtitle {
-    font-size: 0.7rem;
+    font-size: 0.8rem;
   }
 
+  .hero__cta {
+    font-size: 0.85rem;
+    padding: 0.4rem 0.8rem;
+  }
   .hero__dots {
     bottom: 0.5rem;
   }
@@ -455,11 +466,11 @@ footer {
     width: 200px;
   }
   .hero__btn--prev {
-    left: 0.3rem;
+    left: 0.2rem;
   }
 
   .hero__btn--next {
-    right: 0.3rem;
+    right: 0.2rem;
   }
 }
 
@@ -470,26 +481,30 @@ footer {
   }
 
   .hero__overlay {
-    bottom: 5%;
-    padding: 0.8rem;
+    width: 95%;
+    max-width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 8%;
+    padding: 0.5rem 0.7rem;
   }
 
   .hero__title {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .hero__subtitle {
-    font-size: 0.85rem;
+    font-size: 0.7rem;
   }
 
   .pp {
     width: 130px;
   }
   .hero__btn--prev {
-    left: 0.3rem;
+    left: 0.1rem;
   }
 
   .hero__btn--next {
-    right: 0.3rem;
+    right: 0.1rem;
   }
 }
