@@ -112,11 +112,13 @@ body {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.8s ease;
-  -webkit-transition: opacity 0.8s ease;
-  -moz-transition: opacity 0.8s ease;
-  -ms-transition: opacity 0.8s ease;
-  -o-transition: opacity 0.8s ease;
+  transform: scale(1.1);
+  transition: opacity 1200ms ease, transform 6000ms ease;
+  -webkit-transition: opacity 1200ms ease, transform 6000ms ease;
+  -moz-transition: opacity 1200ms ease, transform 6000ms ease;
+  -ms-transition: opacity 1200ms ease, transform 6000ms ease;
+  -o-transition: opacity 1200ms ease, transform 6000ms ease;
+  z-index: -1;
 }
 
 .hero__slide::after {
@@ -143,7 +145,7 @@ body {
 
 .hero__slide.active {
   opacity: 1;
-  transform: none;
+  transform: scale(1);
   z-index: 0;
 }
 
