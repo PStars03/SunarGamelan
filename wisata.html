@@ -1,25 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
   <head>
-    <title>Paket Wisata Desa Jarum - Sunar Gamelan</title>
+    <title data-i18n="wisata_page_title">Paket Wisata Desa Jarum - Sunar Gamelan</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      rel="icon"
-      type="image/png"
-      sizes="16x16"
-      href="/resources/img/favicon.png"
-    />
+    <link rel="icon" type="image/png" sizes="16x16" href="/resources/img/favicon.png" />
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     <link rel="stylesheet" href="resources/css/style.css" />
   </head>
 
@@ -28,95 +17,41 @@
     <nav class="navbar navbar-expand-lg navbar-dark fixed-top bg-brown">
       <div class="container">
         <a class="navbar-brand fw-bold" href="#">
-          <img
-            src="resources/img/logo.jpg"
-            alt="Logo"
-            width="40"
-            height="40"
-            class="d-inline-block align-text-center me-1"
-          />
+          <img src="resources/img/logo.jpg" alt="Logo" width="40" height="40" class="d-inline-block align-text-center me-1" />
           Sunar Gamelan
         </a>
-        <button
-          class="navbar-toggler btn btn-outline-gold"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-        >
+        <button class="navbar-toggler btn btn-outline-gold" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div
-          class="collapse navbar-collapse justify-content-end"
-          id="navbarNav"
-        >
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
           <ul class="navbar-nav align-items-lg-center">
             <li class="nav-item">
-              <a
-                class="nav-link"
-                href="/index.html#tentang"
-                data-i18n="nav_about"
-                >Tentang</a
-              >
+              <a class="nav-link" href="/index.html#tentang" data-i18n="nav_about">Tentang</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link"
-                href="/index.html#galeri"
-                data-i18n="nav_gallery"
-                >Galeri</a
-              >
+              <a class="nav-link" href="/index.html#galeri" data-i18n="nav_gallery">Galeri</a>
             </li>
             <li class="nav-item">
-              <a
-                class="nav-link"
-                href="/index.html#kontak"
-                data-i18n="nav_contact"
-                >Kontak</a
-              >
+              <a class="nav-link" href="/index.html#kontak" data-i18n="nav_contact">Kontak</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/index.html" data-i18n="nav_beranda"
-                >Beranda</a
-              >
+              <a class="nav-link" href="/index.html" data-i18n="nav_beranda">Beranda</a>
             </li>
 
             <!-- Dropdown Bahasa (icon bumi) -->
             <li class="nav-item dropdown ms-lg-3 mt-2 mt-lg-0">
-              <a
-                class="nav-link dropdown-toggle d-flex align-items-center gap-1"
-                href="#"
-                id="langDropdown"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                title="Language"
-              >
+              <a class="nav-link dropdown-toggle d-flex align-items-center gap-1" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" title="Language">
                 <!-- icon bumi -->
                 <i class="bi bi-globe2 fs-5"></i>
                 <span id="current-lang-label" class="small">ID</span>
               </a>
 
-              <ul
-                class="dropdown-menu dropdown-menu-end"
-                aria-labelledby="langDropdown"
-              >
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
                 <li>
-                  <button
-                    class="dropdown-item lang-option"
-                    data-lang="id"
-                    type="button"
-                  >
-                    Bahasa Indonesia
-                  </button>
+                  <button class="dropdown-item lang-option" data-lang="id" type="button">Indonesia</button>
                 </li>
                 <li>
-                  <button
-                    class="dropdown-item lang-option"
-                    data-lang="en"
-                    type="button"
-                  >
-                    English
-                  </button>
+                  <button class="dropdown-item lang-option" data-lang="en" type="button">English</button>
                 </li>
               </ul>
             </li>
@@ -127,27 +62,17 @@
 
     <header class="py-5 head-wisata mt-5">
       <div class="container container-head">
-        <div
-          class="row align-items-center justify-content-center g-3 text-center text-lg-start"
-        >
+        <div class="row align-items-center justify-content-center g-3 text-center text-lg-start">
           <!-- Gambar -->
           <div class="col-12 col-lg-5 d-flex justify-content-center">
-            <img
-              src="resources/img/Head-wisata.png"
-              alt="Head-wisata"
-              class="img-fluid head-img"
-            />
+            <img src="resources/img/Head-wisata.png" alt="Head-wisata" class="img-fluid head-img" />
           </div>
 
           <!-- Teks -->
           <div class="col-12 col-lg-7">
-            <h1 class="fw-bold mb-3 text-center text-lg-start">
-              Paket Wisata Desa Jarum, Bayat
-            </h1>
-            <p class="lead mb-0 text-center text-lg-start">
-              Jelajahi budaya khas Bayat melalui pengalaman langsung: membatik,
-              membuat gerabah, serta belajar seni tradisi gejog lesung dan
-              gamelan bersama Sanggar Sunar Gamelan.
+            <h1 class="fw-bold mb-3 text-center text-lg-start" data-i18n="wisata_header_title">Paket Wisata Desa Jarum, Bayat</h1>
+            <p class="lead mb-0 text-center text-lg-start" data-i18n="wisata_header_subtitle">
+              Jelajahi budaya khas Bayat melalui pengalaman langsung: membatik, membuat gerabah, serta belajar seni tradisi gejog lesung dan gamelan bersama Sanggar Sunar Gamelan.
             </p>
           </div>
         </div>
@@ -162,37 +87,32 @@
           <div class="col-md-4">
             <div class="card h-100 shadow-sm container-paket-item">
               <div class="paket-img-wrap">
-                <span class="badge-paket">Paket 1</span>
-                <img
-                  src="resources/img/batik.jpg"
-                  class="card-img-top"
-                  alt="Paket Batik Kain dan Gamelan"
-                  style="height: 220px; object-fit: cover"
-                />
+                <span class="badge-paket" data-i18n="wisata_paket1_badge">Paket 1</span>
+                <img src="resources/img/batik.jpg" class="card-img-top" alt="Paket Batik Kain dan Gamelan" style="height: 220px; object-fit: cover" />
               </div>
 
               <div class="card-body d-flex flex-column">
-                <h4 class="card-title fw-bold mb-2">Batik Kain & Gamelan</h4>
-                <p class="mb-3">
-                  Belajar batik tulis langsung di kampung batik Desa Jarum,
-                  dilanjutkan pengalaman karawitan/gamelan khas Bayat.
-                </p>
+                <h4 class="card-title fw-bold mb-2" data-i18n="wisata_paket1_title">Batik Kain & Gamelan</h4>
+                <p class="mb-3" data-i18n="wisata_paket1_desc">Belajar batik tulis langsung di kampung batik Desa Jarum, dilanjutkan pengalaman karawitan/gamelan khas Bayat.</p>
 
                 <ul class="mb-3">
-                  <li>Welcome drink & pengantar sejarah batik Bayat</li>
-                  <li>Tur kampung batik & rumah perajin</li>
-                  <li>Workshop batik kain (nyanting + pewarnaan)</li>
-                  <li>Snack tradisional</li>
-                  <li>Kelas gamelan pemula + kolaborasi mini performance</li>
-                  <li>Belanja batik sebagai oleh-oleh</li>
+                  <li data-i18n="wisata_paket1_li1">Welcome drink & pengantar sejarah batik Bayat</li>
+                  <li data-i18n="wisata_paket1_li2">Tur kampung batik & rumah perajin</li>
+                  <li data-i18n="wisata_paket1_li3">Workshop batik kain (nyanting + pewarnaan)</li>
+                  <li data-i18n="wisata_paket1_li4">Snack tradisional</li>
+                  <li data-i18n="wisata_paket1_li5">Kelas gamelan pemula + kolaborasi mini performance</li>
+                  <li data-i18n="wisata_paket1_li6">Belanja batik sebagai oleh-oleh</li>
                 </ul>
-
                 <div class="mt-auto">
-                  <p class="mb-1"><strong>Durasi:</strong> 1 Hari (±6–7 jam)</p>
-                  <p class="mb-3"><strong>Minimal peserta:</strong> 10 orang</p>
-                  <a href="index.html#kontak" class="btn btn-gold w-100">
-                    Pesan Paket
-                  </a>
+                  <p class="mb-1">
+                    <strong data-i18n="wisata_duration_label">Durasi:</strong>
+                    <span data-i18n="wisata_paket1_duration">1 Hari (±6–7 jam)</span>
+                  </p>
+                  <p class="mb-3">
+                    <strong data-i18n="wisata_min_label">Minimal peserta:</strong>
+                    <span data-i18n="wisata_paket1_min">10 orang</span>
+                  </p>
+                  <a href="index.html#kontak" class="btn btn-gold w-100" data-i18n="wisata_order_btn"> Pesan Paket </a>
                 </div>
               </div>
             </div>
@@ -202,37 +122,34 @@
           <div class="col-md-4">
             <div class="card h-100 shadow-sm container-paket-item">
               <div class="paket-img-wrap">
-                <span class="badge-paket">Paket 2</span>
-                <img
-                  src="resources/img/gerabah.jpg"
-                  class="card-img-top"
-                  alt="Paket Gerabah dan Gamelan"
-                  style="height: 220px; object-fit: cover"
-                />
+                <span class="badge-paket" data-i18n="wisata_paket2_badge">Paket 2</span>
+                <img src="resources/img/gerabah.jpg" class="card-img-top" alt="Paket Gerabah dan Gamelan" style="height: 220px; object-fit: cover" />
               </div>
 
               <div class="card-body d-flex flex-column">
-                <h4 class="card-title fw-bold mb-2">Gerabah & Gamelan</h4>
-                <p class="mb-3">
-                  Kunjungan ke sentra gerabah Bayat, praktik membentuk tanah
-                  liat, dan ditutup dengan kelas gamelan bersama.
-                </p>
+                <h4 class="card-title fw-bold mb-2" data-i18n="wisata_paket2_title">Gerabah & Gamelan</h4>
+                <p class="mb-3" data-i18n="wisata_paket2_desc">Kunjungan ke sentra gerabah Bayat, praktik membentuk tanah liat, dan ditutup dengan kelas gamelan bersama.</p>
 
                 <ul class="mb-3">
-                  <li>Pengantar tradisi gerabah Bayat</li>
-                  <li>Tur sentra gerabah (olah tanah + pembakaran)</li>
-                  <li>Workshop gerabah (putar / hand-building)</li>
-                  <li>Snack tradisional</li>
-                  <li>Kelas gamelan pemula + kolaborasi mini performance</li>
-                  <li>Belanja gerabah & cinderamata</li>
+                  <li data-i18n="wisata_paket2_li1">Pengantar tradisi gerabah Bayat</li>
+                  <li data-i18n="wisata_paket2_li2">Tur sentra gerabah (olah tanah + pembakaran)</li>
+                  <li data-i18n="wisata_paket2_li3">Workshop gerabah (putar / hand-building)</li>
+                  <li data-i18n="wisata_paket2_li4">Snack tradisional</li>
+                  <li data-i18n="wisata_paket2_li5">Kelas gamelan pemula + kolaborasi mini performance</li>
+                  <li data-i18n="wisata_paket2_li6">Belanja gerabah & cinderamata</li>
                 </ul>
 
                 <div class="mt-auto">
-                  <p class="mb-1"><strong>Durasi:</strong> 1 Hari (±6 jam)</p>
-                  <p class="mb-3"><strong>Minimal peserta:</strong> 10 orang</p>
-                  <a href="index.html#kontak" class="btn btn-gold w-100">
-                    Pesan Paket
-                  </a>
+                  <p class="mb-1">
+                    <strong data-i18n="wisata_duration_label">Durasi:</strong>
+                    <span data-i18n="wisata_paket2_duration">1 Hari (±6 jam)</span>
+                  </p>
+                  <p class="mb-3">
+                    <strong data-i18n="wisata_min_label">Minimal peserta:</strong>
+                    <span data-i18n="wisata_paket2_min">10 orang</span>
+                  </p>
+
+                  <a href="index.html#kontak" class="btn btn-gold w-100" data-i18n="wisata_order_btn"> Pesan Paket </a>
                 </div>
               </div>
             </div>
@@ -242,39 +159,34 @@
           <div class="col-md-4">
             <div class="card h-100 shadow-sm container-paket-item">
               <div class="paket-img-wrap">
-                <span class="badge-paket">Paket 3</span>
-                <img
-                  src="resources/img/gejog.jpeg"
-                  class="card-img-top"
-                  alt="Paket Gejog Lesung dan Gamelan"
-                  style="height: 220px; object-fit: cover"
-                />
+                <span class="badge-paket" data-i18n="wisata_paket3_badge">Paket 3</span>
+                <img src="resources/img/gejog.jpeg" class="card-img-top" alt="Paket Gejog Lesung dan Gamelan" style="height: 220px; object-fit: cover" />
               </div>
 
               <div class="card-body d-flex flex-column">
-                <h4 class="card-title fw-bold mb-2">Gejog Lesung & Gamelan</h4>
-                <p class="mb-3">
-                  Rasakan sensasi seni bunyi tradisional gejog lesung, lalu
-                  kolaborasi ritme dengan gamelan.
-                </p>
+                <h4 class="card-title fw-bold mb-2" data-i18n="wisata_paket3_title">Gejog Lesung & Gamelan</h4>
+                <p class="mb-3" data-i18n="wisata_paket3_desc">Rasakan sensasi seni bunyi tradisional gejog lesung, lalu kolaborasi ritme dengan gamelan.</p>
 
                 <ul class="mb-3">
-                  <li>Pengantar & cerita tradisi gejog lesung</li>
-                  <li>Demo gejog lesung oleh kelompok seni desa</li>
-                  <li>Workshop gejog lesung interaktif</li>
-                  <li>Snack tradisional</li>
-                  <li>Kelas gamelan + kolaborasi mini performance</li>
-                  <li>Foto bersama & suvenir desa</li>
+                  <li data-i18n="wisata_paket3_li1">Pengantar & cerita tradisi gejog lesung</li>
+                  <li data-i18n="wisata_paket3_li2">Demo gejog lesung oleh kelompok seni desa</li>
+                  <li data-i18n="wisata_paket3_li3">Workshop gejog lesung interaktif</li>
+                  <li data-i18n="wisata_paket3_li4">Snack tradisional</li>
+                  <li data-i18n="wisata_paket3_li5">Kelas gamelan + kolaborasi mini performance</li>
+                  <li data-i18n="wisata_paket3_li6">Foto bersama & suvenir desa</li>
                 </ul>
 
                 <div class="mt-auto">
                   <p class="mb-1">
-                    <strong>Durasi:</strong> Halfday (±4–5 jam)
+                    <strong data-i18n="wisata_duration_label">Durasi:</strong>
+                    <span data-i18n="wisata_paket3_duration">Halfday (±4–5 jam)</span>
                   </p>
-                  <p class="mb-3"><strong>Minimal peserta:</strong> 15 orang</p>
-                  <a href="index.html#kontak" class="btn btn-gold w-100">
-                    Pesan Paket
-                  </a>
+                  <p class="mb-3">
+                    <strong data-i18n="wisata_min_label">Minimal peserta:</strong>
+                    <span data-i18n="wisata_paket3_min">15 orang</span>
+                  </p>
+
+                  <a href="index.html#kontak" class="btn btn-gold w-100" data-i18n="wisata_order_btn"> Pesan Paket </a>
                 </div>
               </div>
             </div>
@@ -285,35 +197,29 @@
         <div class="row mt-5">
           <div class="col-lg-10 mx-auto">
             <div class="p-4 bg-light rounded shadow-sm">
-              <h4 class="fw-bold mb-3">Catatan Operasional</h4>
+              <h4 class="fw-bold mb-3" data-i18n="wisata_note_title">Catatan Operasional</h4>
               <ul class="mb-0">
-                <li>Harga menyesuaikan jumlah peserta & pilihan konsumsi.</li>
-                <li>
-                  Bisa request paket khusus (2D1N, homestay warga, atau agenda
-                  budaya tertentu).
-                </li>
-                <li>Waktu terbaik berkunjung: pagi–siang.</li>
+                <li data-i18n="wisata_note_li1">Harga menyesuaikan jumlah peserta & pilihan konsumsi.</li>
+                <li data-i18n="wisata_note_li2">Bisa request paket khusus (2D1N, homestay warga, atau agenda budaya tertentu).</li>
+                <li data-i18n="wisata_note_li3">Waktu terbaik berkunjung: pagi–siang.</li>
               </ul>
             </div>
           </div>
         </div>
 
         <!-- Tombol kembali -->
-        <div class="text-center mt-4">
-          <a href="index.html" class="btn btn-gold">Kembali ke Beranda</a>
-        </div>
+        <div class="text-center mt-4"><a href="index.html" class="btn btn-gold" data-i18n="wisata_back_home"> Kembali ke Beranda </a></div>
       </div>
     </section>
 
     <!-- ===== Footer ===== -->
     <footer class="text-center">
       <div class="container">
-        <p class="mb-0">
-          &copy; 2025 Sunar Gamelan. Semua hak cipta dilindungi.
-        </p>
+        <p class="mb-0" data-i18n="footer_copy">&copy; 2025 Sunar Gamelan. Semua hak cipta dilindungi.</p>
       </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="resources/js/index.js"></script>
   </body>
 </html>
