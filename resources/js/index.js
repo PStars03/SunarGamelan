@@ -84,7 +84,8 @@ window.addEventListener("scroll", function () {
 
 // ===================== AMBIL DATA GOOGLE SHEET =====================
 (function () {
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
+  const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
 
   function parseGViz(text) {
     const json = JSON.parse(text.substr(47).slice(0, -2));
@@ -231,15 +232,22 @@ function isiDropdownKategori() {
 
 // =============== EVENT LISTENER ===============
 function setupFilterListeners() {
-  document.getElementById("filterKategori")?.addEventListener("change", applyFilters);
-  document.getElementById("searchInput")?.addEventListener("input", applyFilters);
-  document.getElementById("sortSelect")?.addEventListener("change", applyFilters);
+  document
+    .getElementById("filterKategori")
+    ?.addEventListener("change", applyFilters);
+  document
+    .getElementById("searchInput")
+    ?.addEventListener("input", applyFilters);
+  document
+    .getElementById("sortSelect")
+    ?.addEventListener("change", applyFilters);
 }
 
 // =============== FILTER ENGINE ===============
 function applyFilters() {
   const kategori = document.getElementById("filterKategori")?.value || "";
-  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+  const searchTerm =
+    document.getElementById("searchInput")?.value.toLowerCase() || "";
   const sortType = document.getElementById("sortSelect")?.value || "az";
 
   filteredItems = allItems.filter((item) => {
@@ -269,7 +277,9 @@ function renderFiltered() {
 
   if (containerIndex) {
     containerIndex.innerHTML = "";
-    filteredItems.slice(0, 6).forEach((item) => createGalleryCard(item, containerIndex));
+    filteredItems
+      .slice(0, 6)
+      .forEach((item) => createGalleryCard(item, containerIndex));
   }
 
   if (containerFull) {
@@ -316,7 +326,8 @@ document.addEventListener("DOMContentLoaded", () => {
   toggle?.addEventListener("click", () => {
     document.body.classList.toggle("dark");
 
-    if (document.body.classList.contains("dark")) localStorage.setItem("darkMode", "on");
+    if (document.body.classList.contains("dark"))
+      localStorage.setItem("darkMode", "on");
     else localStorage.setItem("darkMode", "off");
   });
 });
@@ -330,6 +341,7 @@ const translations = {
     nav_about: "Tentang",
     nav_gallery: "Galeri",
     nav_contact: "Kontak",
+    nav_wisata: "Wisata",
 
     hero1_title: "Sunar Gamelan",
     hero1_subtitle: "Harmoni Tradisi Nusantara — Musik, Budaya, Kebersamaan",
@@ -355,7 +367,8 @@ const translations = {
     gallery_more: "Lihat Selengkapnya",
 
     contact_title: "Hubungi Kami",
-    contact_subtitle: "Ingin bekerja sama atau sekadar bertanya? Silakan isi formulir di bawah ini atau hubungi kami melalui informasi berikut.",
+    contact_subtitle:
+      "Ingin bekerja sama atau sekadar bertanya? Silakan isi formulir di bawah ini atau hubungi kami melalui informasi berikut.",
 
     form_name_label: "Nama Lengkap",
     form_name_ph: "Masukkan nama Anda",
@@ -380,6 +393,7 @@ const translations = {
     nav_about: "About",
     nav_gallery: "Gallery",
     nav_contact: "Contact",
+    nav_wisata: "Tourism",
 
     hero1_title: "Sunar Gamelan",
     hero1_subtitle: "Harmony of the Archipelago — Music, Culture, Togetherness",
@@ -405,7 +419,8 @@ const translations = {
     gallery_more: "See More",
 
     contact_title: "Contact Us",
-    contact_subtitle: "Want to collaborate or just ask something? Fill out the form below or reach us through the information provided.",
+    contact_subtitle:
+      "Want to collaborate or just ask something? Fill out the form below or reach us through the information provided.",
 
     form_name_label: "Full Name",
     form_name_ph: "Enter your name",
@@ -454,7 +469,9 @@ function applyTranslations(lang) {
 
   // update title halaman juga
   const titleEl = document.querySelector("title[data-i18n='page_title']");
-  if (titleEl) titleEl.textContent = translations?.[lang]?.page_title || titleEl.textContent;
+  if (titleEl)
+    titleEl.textContent =
+      translations?.[lang]?.page_title || titleEl.textContent;
 }
 
 function setLanguage(lang) {
