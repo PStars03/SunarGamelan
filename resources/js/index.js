@@ -170,7 +170,7 @@ function loadFullGallery() {
   // Previous Button
   pagination.innerHTML += `
     <li class="page-item ${CURRENT_PAGE === 1 ? "disabled" : ""}">
-     <a class="page-link" href="#" data-page="prev">${prevText}</a>
+      <a class="page-link" href="#" data-page="prev">${prevText}</a>
     </li>
   `;
 
