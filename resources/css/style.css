@@ -6,13 +6,17 @@
 
 /* ------------ GLOBAL ------------ */
 body {
-  font-family: "Poppins", sans-serif;
+  font-family: "Poppins", sans-serif !important;
 }
 
 /* ------------ NAVBAR ------------ */
 .navbar {
-  background-color: #8b5e00;
+  background-color: #8b5e00 !important;
   transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  -webkit-transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  -moz-transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  -ms-transition: background-color 0.4s ease, box-shadow 0.4s ease;
+  -o-transition: background-color 0.4s ease, box-shadow 0.4s ease;
 }
 
 .navbar.scrolled {
@@ -346,6 +350,75 @@ footer {
 
 .form-select {
   background-color: white !important;
+}
+
+/* Wisata */
+.head-wisata {
+  position: relative;
+  background: #140f01;
+  background: linear-gradient(
+    0deg,
+    rgba(20, 15, 1, 1) 24%,
+    rgba(184, 134, 11, 1) 100%
+  );
+  color: #f3e8d0;
+}
+
+.head-wisata p {
+  color: #f3e8d0;
+  opacity: 0.8;
+}
+
+.head-wisata img,
+.head-img {
+  display: block;
+  margin: 0 auto; /* center */
+  max-width: 100%; /* biar responsif */
+  height: auto;
+}
+
+/* ===== Paket Wisata ===== */
+.container-paket-item {
+  background: #140f01; /* gelap elegan */
+  border: 2px solid transparent;
+  transition: 0.3s ease;
+  color: #f3e8d0;
+}
+
+.container-paket-item:hover {
+  border-color: gold;
+  transform: translateY(-6px);
+  box-shadow: 0 0 12px rgba(255, 215, 0, 0.5);
+}
+
+.container-paket-item .card-title,
+.container-paket-item p,
+.container-paket-item li {
+  color: #f3e8d0 !important;
+}
+
+.container-paket-item .card-body {
+  background: transparent !important;
+}
+
+/* Badge pojok gambar */
+.paket-img-wrap {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.badge-paket {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: #b8860b;
+  color: white;
+  font-weight: 700;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+  z-index: 2;
 }
 
 /* ---------- MAX 1200px (Laptop) ---------- */
