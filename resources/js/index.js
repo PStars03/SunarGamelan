@@ -338,6 +338,7 @@ const translations = {
     page_title: "Sunar Gamelan - Harmoni Tradisi Nusantara",
     brand_name: "Sunar Gamelan",
 
+    nav_beranda: "Beranda",
     nav_about: "Tentang",
     nav_gallery: "Galeri",
     nav_contact: "Kontak",
@@ -390,6 +391,7 @@ const translations = {
     page_title: "Sunar Gamelan - Harmony of Indonesian Tradition",
     brand_name: "Sunar Gamelan",
 
+    nav_beranda: "Home",
     nav_about: "About",
     nav_gallery: "Gallery",
     nav_contact: "Contact",
