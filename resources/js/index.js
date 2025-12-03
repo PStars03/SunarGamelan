@@ -139,6 +139,7 @@ function renderLimitedGallery(data) {
     if (data.length > LIMIT) btn.classList.remove("d-none");
     else btn.classList.add("d-none");
   }
+  translateGalleryOnly();
 }
 
 // ===================== PAGINATION (GALERI.HTML) =====================
@@ -151,6 +152,10 @@ function loadFullGallery() {
 
   const items = window.ALL_GALLERY_ITEMS || [];
   const totalPages = Math.ceil(items.length / ITEMS_PER_PAGE);
+
+  const lang = getCurrentLang();
+  const prevText = translations[lang]?.pagination_prev || "Previous";
+  const nextText = translations[lang]?.pagination_next || "Next";
 
   // ===== Render Galeri =====
   const start = (CURRENT_PAGE - 1) * ITEMS_PER_PAGE;
@@ -166,7 +171,7 @@ function loadFullGallery() {
   // Previous Button
   pagination.innerHTML += `
     <li class="page-item ${CURRENT_PAGE === 1 ? "disabled" : ""}">
-      <a class="page-link" href="#" data-page="prev">Previous</a>
+     <a class="page-link" href="#" data-page="prev">${prevText}</a>
     </li>
   `;
 
@@ -182,7 +187,7 @@ function loadFullGallery() {
   // Next Button
   pagination.innerHTML += `
     <li class="page-item ${CURRENT_PAGE === totalPages ? "disabled" : ""}">
-      <a class="page-link" href="#" data-page="next">Next</a>
+      <a class="page-link" href="#" data-page="next">${nextText}</a>
     </li>
   `;
 
@@ -200,6 +205,7 @@ function loadFullGallery() {
       loadFullGallery();
     });
   });
+  translateGalleryOnly();
 }
 
 let allItems = [];
@@ -220,12 +226,21 @@ function isiDropdownKategori() {
   const select = document.getElementById("filterKategori");
   if (!select) return;
 
-  const kategoriUnik = [...new Set(allItems.map((i) => i.kategori))];
+  const map = new Map(); // catId -> catEn
+  allItems.forEach((item) => {
+    const catId = item.kategori || "";
+    const catEn = item.kategori_en || catId;
+    if (catId) map.set(catId, catEn);
+  });
 
-  kategoriUnik.forEach((k) => {
+  select.innerHTML = `<option value="all">Semua Kategori</option>`;
+
+  map.forEach((catEn, catId) => {
     const opt = document.createElement("option");
-    opt.value = k;
-    opt.textContent = k;
+    opt.value = catId; // VALUE tetap ID biar filter tetap jalan
+    opt.dataset.catId = catId;
+    opt.dataset.catEn = catEn;
+    opt.textContent = getCurrentLang() === "id" ? catId : catEn;
     select.appendChild(opt);
   });
 }
@@ -245,22 +260,36 @@ function setupFilterListeners() {
 
 // =============== FILTER ENGINE ===============
 function applyFilters() {
+<<<<<<< HEAD
+  if (!allItems || allItems.length === 0) return;
+  const lang = getCurrentLang();
+
+  const kategori = document.getElementById("filterKategori")?.value || "all";
+  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+=======
   const kategori = document.getElementById("filterKategori")?.value || "";
   const searchTerm =
     document.getElementById("searchInput")?.value.toLowerCase() || "";
+>>>>>>> b041d38dd2d0099c15e369afeafbb6693fd2423d
   const sortType = document.getElementById("sortSelect")?.value || "az";
 
   filteredItems = allItems.filter((item) => {
-    const cocokKategori = kategori === "" || item.kategori === kategori;
-    const cocokSearch = item.judul.toLowerCase().includes(searchTerm);
+    const catId = item.kategori || "";
+    const judulAktif = (lang === "id" ? item.judul : item.judul_en || item.judul) || "";
+
+    const cocokKategori = kategori === "all" || catId === kategori;
+    const cocokSearch = judulAktif.toLowerCase().includes(searchTerm);
+
     return cocokKategori && cocokSearch;
   });
 
-  // sorting
+  // sorting pakai judul aktif
+  const getTitle = (it) => (lang === "id" ? it.judul : it.judul_en || it.judul) || "";
+
   if (sortType === "az") {
-    filteredItems.sort((a, b) => a.judul.localeCompare(b.judul));
+    filteredItems.sort((a, b) => getTitle(a).localeCompare(getTitle(b)));
   } else if (sortType === "za") {
-    filteredItems.sort((a, b) => b.judul.localeCompare(a.judul));
+    filteredItems.sort((a, b) => getTitle(b).localeCompare(getTitle(a)));
   } else if (sortType === "newest") {
     filteredItems.sort((a, b) => b.no - a.no);
   } else if (sortType === "oldest") {
@@ -268,6 +297,7 @@ function applyFilters() {
   }
 
   renderFiltered();
+  translateGalleryOnly(); // penting biar judul/kategori card langsung update
 }
 
 // =============== RENDER (INDEX + GALERI.HTML) ===============
@@ -286,29 +316,133 @@ function renderFiltered() {
     containerFull.innerHTML = "";
     filteredItems.forEach((item) => createGalleryCard(item, containerFull));
   }
+  translateGalleryOnly();
+}
+
+// ===================== GALLERY i18n HELPERS =====================
+let LAST_MODAL_ITEM = null;
+
+function getCurrentLang() {
+  return localStorage.getItem("lang") || "id";
+}
+
+function translateGalleryOnly() {
+  const lang = getCurrentLang();
+
+  // update judul card galeri
+  document.querySelectorAll(".gallery-title").forEach((el) => {
+    el.textContent = lang === "id" ? el.dataset.titleId : el.dataset.titleEn;
+  });
+
+  // update kategori card (kalau ditampilkan)
+  document.querySelectorAll(".gallery-cat").forEach((el) => {
+    el.textContent = lang === "id" ? el.dataset.catId : el.dataset.catEn;
+  });
+
+  // update modal/lightbox kalau lagi kebuka
+  const modalEl = document.getElementById("galleryModal");
+  if (modalEl?.classList.contains("show") && LAST_MODAL_ITEM) {
+    document.getElementById("modal-title").textContent = lang === "id" ? LAST_MODAL_ITEM.dataset.titleId : LAST_MODAL_ITEM.dataset.titleEn;
+
+    document.getElementById("modal-desc").textContent = lang === "id" ? LAST_MODAL_ITEM.dataset.descId : LAST_MODAL_ITEM.dataset.descEn;
+  }
+
+  // update dropdown kategori + sort label (kalau ada)
+  translateCategoryFilterOptions(lang);
+  translateSortOptions(lang);
+}
+
+function translateCategoryFilterOptions(lang) {
+  const select = document.getElementById("filterKategori");
+  if (!select) return;
+
+  // option bilingual
+  select.querySelectorAll("option[data-cat-id]").forEach((opt) => {
+    opt.textContent = lang === "id" ? opt.dataset.catId : opt.dataset.catEn;
+  });
+
+  // placeholder pertama
+  const first = select.querySelector("option[value='all']");
+  if (first) first.textContent = lang === "id" ? "Semua Kategori" : "All Categories";
+}
+
+function translateSortOptions(lang) {
+  const select = document.getElementById("sortSelect");
+  if (!select) return;
+
+  // option bilingual (kalau tidak ada dataset, pakai default)
+  select.querySelectorAll("option[data-i18n-id]").forEach((opt) => {
+    opt.textContent = lang === "id" ? opt.dataset.i18nId : opt.dataset.i18nEn;
+  });
 }
 
 // ===================== TEMPLATE CARD + MODAL =====================
-
 function createGalleryCard(item, container) {
   if (!item) return;
+
+  // kolom dari sheet kamu
+  const titleId = item.judul || "";
+  const titleEn = item.judul_en || titleId;
+
+  const descId = item.deskripsi || "";
+  const descEn = item.deskripsi_en || descId;
+
+  const catId = item.kategori || "";
+  const catEn = item.kategori_en || catId;
+
+  const imgUrl = item.image || "";
+
+  const lang = getCurrentLang();
+  const showTitle = lang === "id" ? titleId : titleEn;
+  const showCat = lang === "id" ? catId : catEn;
 
   const col = document.createElement("div");
   col.classList.add("col-12", "col-sm-6", "col-lg-4", "mb-4");
 
   col.innerHTML = `
     <div class="card shadow-sm gallery-card" style="cursor:pointer;">
-      <img src="${item.image}" class="card-img-top" style="height:250px; object-fit:cover;">
+      <img
+        src="${imgUrl}"
+        class="card-img-top gallery-img"
+        style="height:250px; object-fit:cover;"
+
+        data-title-id="${titleId}"
+        data-title-en="${titleEn}"
+        data-desc-id="${descId}"
+        data-desc-en="${descEn}"
+        data-cat-id="${catId}"
+        data-cat-en="${catEn}"
+        data-img="${imgUrl}"
+      />
+
       <div class="card-body text-center">
-        <h5 class="card-title">${item.judul}</h5>
+        <h5 class="card-title gallery-title"
+            data-title-id="${titleId}"
+            data-title-en="${titleEn}">
+          ${showTitle}
+        </h5>
+
+        <!-- kategori tampil di card -->
+        <small class="text-muted gallery-cat"
+               data-cat-id="${catId}"
+               data-cat-en="${catEn}">
+          ${showCat}
+        </small>
       </div>
     </div>
   `;
 
   col.addEventListener("click", () => {
-    document.getElementById("modal-title").textContent = item.judul;
-    document.getElementById("modal-image").src = item.image;
-    document.getElementById("modal-desc").textContent = item.deskripsi;
+    const langNow = getCurrentLang();
+
+    LAST_MODAL_ITEM = col.querySelector(".gallery-img");
+
+    const t = langNow === "id" ? titleId : titleEn;
+    const d = langNow === "id" ? descId : descEn;
+
+    document.getElementById("modal-title").textContent = t;
+    document.getElementById("modal-image").src = imgUrl;
+    document.getElementById("modal-desc").textContent = d;
 
     new bootstrap.Modal(document.getElementById("galleryModal")).show();
   });
@@ -316,6 +450,8 @@ function createGalleryCard(item, container) {
   container.appendChild(col);
 }
 
+<<<<<<< HEAD
+=======
 // ========== DARK MODE ==========
 document.addEventListener("DOMContentLoaded", () => {
   const toggle = document.getElementById("toggle-dark");
@@ -332,6 +468,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+>>>>>>> b041d38dd2d0099c15e369afeafbb6693fd2423d
 // ===================== i18n GLOBAL =====================
 const translations = {
   id: {
@@ -385,6 +522,14 @@ const translations = {
     info_social_label: "Ikuti kami di media sosial:",
 
     footer_copy: "© 2025 Sunar Gamelan. Semua hak cipta dilindungi.",
+
+    gallery_page_title: "Galeri Lengkap - Sunar Gamelan",
+    gallery_full_title: "Galeri Lengkap",
+    gallery_search_ph: "Cari foto / judul…",
+    gallery_category_ph: "Kategori",
+    gallery_back_btn: "Kembali",
+    pagination_prev: "Sebelumnya",
+    pagination_next: "Selanjutnya",
   },
 
   en: {
@@ -438,6 +583,14 @@ const translations = {
     info_social_label: "Follow us on social media:",
 
     footer_copy: "© 2025 Sunar Gamelan. All rights reserved.",
+
+    gallery_page_title: "Full Gallery - Sunar Gamelan",
+    gallery_full_title: "Full Gallery",
+    gallery_search_ph: "Search photo / title…",
+    gallery_category_ph: "Category",
+    gallery_back_btn: "Back",
+    pagination_prev: "Previous",
+    pagination_next: "Next",
   },
 };
 
@@ -479,6 +632,16 @@ function applyTranslations(lang) {
 function setLanguage(lang) {
   localStorage.setItem("lang", lang);
   applyTranslations(lang);
+
+  // update teks galeri + modal pakai dataset yang sudah ada
+  translateGalleryOnly();
+
+  // HANYA jalankan filter kalau memang di halaman galeri lengkap
+  const isGalleryPage = !!document.getElementById("filterKategori") || !!document.getElementById("gallery-container-full");
+
+  if (isGalleryPage) {
+    applyFilters();
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
