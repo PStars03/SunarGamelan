@@ -84,7 +84,8 @@ window.addEventListener("scroll", function () {
 
 // ===================== AMBIL DATA GOOGLE SHEET =====================
 (function () {
-  const SHEET_URL = "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
+  const SHEET_URL =
+    "https://docs.google.com/spreadsheets/d/1Iziv9FbzyMrkOQSTNdcBKTlnV4OlPTD08S4FiqGUbZ8/gviz/tq?gid=0&tqx=out:json";
 
   function parseGViz(text) {
     const json = JSON.parse(text.substr(47).slice(0, -2));
@@ -246,9 +247,15 @@ function isiDropdownKategori() {
 
 // =============== EVENT LISTENER ===============
 function setupFilterListeners() {
-  document.getElementById("filterKategori")?.addEventListener("change", applyFilters);
-  document.getElementById("searchInput")?.addEventListener("input", applyFilters);
-  document.getElementById("sortSelect")?.addEventListener("change", applyFilters);
+  document
+    .getElementById("filterKategori")
+    ?.addEventListener("change", applyFilters);
+  document
+    .getElementById("searchInput")
+    ?.addEventListener("input", applyFilters);
+  document
+    .getElementById("sortSelect")
+    ?.addEventListener("change", applyFilters);
 }
 
 // =============== FILTER ENGINE ===============
@@ -257,12 +264,14 @@ function applyFilters() {
   const lang = getCurrentLang();
 
   const kategori = document.getElementById("filterKategori")?.value || "all";
-  const searchTerm = document.getElementById("searchInput")?.value.toLowerCase() || "";
+  const searchTerm =
+    document.getElementById("searchInput")?.value.toLowerCase() || "";
   const sortType = document.getElementById("sortSelect")?.value || "az";
 
   filteredItems = allItems.filter((item) => {
     const catId = item.kategori || "";
-    const judulAktif = (lang === "id" ? item.judul : item.judul_en || item.judul) || "";
+    const judulAktif =
+      (lang === "id" ? item.judul : item.judul_en || item.judul) || "";
 
     const cocokKategori = kategori === "all" || catId === kategori;
     const cocokSearch = judulAktif.toLowerCase().includes(searchTerm);
@@ -271,7 +280,8 @@ function applyFilters() {
   });
 
   // sorting pakai judul aktif
-  const getTitle = (it) => (lang === "id" ? it.judul : it.judul_en || it.judul) || "";
+  const getTitle = (it) =>
+    (lang === "id" ? it.judul : it.judul_en || it.judul) || "";
 
   if (sortType === "az") {
     filteredItems.sort((a, b) => getTitle(a).localeCompare(getTitle(b)));
@@ -294,7 +304,9 @@ function renderFiltered() {
 
   if (containerIndex) {
     containerIndex.innerHTML = "";
-    filteredItems.slice(0, 6).forEach((item) => createGalleryCard(item, containerIndex));
+    filteredItems
+      .slice(0, 6)
+      .forEach((item) => createGalleryCard(item, containerIndex));
   }
 
   if (containerFull) {
@@ -327,9 +339,15 @@ function translateGalleryOnly() {
   // update modal/lightbox kalau lagi kebuka
   const modalEl = document.getElementById("galleryModal");
   if (modalEl?.classList.contains("show") && LAST_MODAL_ITEM) {
-    document.getElementById("modal-title").textContent = lang === "id" ? LAST_MODAL_ITEM.dataset.titleId : LAST_MODAL_ITEM.dataset.titleEn;
+    document.getElementById("modal-title").textContent =
+      lang === "id"
+        ? LAST_MODAL_ITEM.dataset.titleId
+        : LAST_MODAL_ITEM.dataset.titleEn;
 
-    document.getElementById("modal-desc").textContent = lang === "id" ? LAST_MODAL_ITEM.dataset.descId : LAST_MODAL_ITEM.dataset.descEn;
+    document.getElementById("modal-desc").textContent =
+      lang === "id"
+        ? LAST_MODAL_ITEM.dataset.descId
+        : LAST_MODAL_ITEM.dataset.descEn;
   }
 
   // update dropdown kategori + sort label (kalau ada)
@@ -348,7 +366,8 @@ function translateCategoryFilterOptions(lang) {
 
   // placeholder pertama
   const first = select.querySelector("option[value='all']");
-  if (first) first.textContent = lang === "id" ? "Semua Kategori" : "All Categories";
+  if (first)
+    first.textContent = lang === "id" ? "Semua Kategori" : "All Categories";
 }
 
 function translateSortOptions(lang) {
@@ -445,6 +464,7 @@ const translations = {
     nav_about: "Tentang",
     nav_gallery: "Galeri",
     nav_contact: "Kontak",
+    nav_wisata: "Wisata",
 
     hero1_title: "Sunar Gamelan",
     hero1_subtitle: "Harmoni Tradisi Nusantara — Musik, Budaya, Kebersamaan",
@@ -470,7 +490,8 @@ const translations = {
     gallery_more: "Lihat Selengkapnya",
 
     contact_title: "Hubungi Kami",
-    contact_subtitle: "Ingin bekerja sama atau sekadar bertanya? Silakan isi formulir di bawah ini atau hubungi kami melalui informasi berikut.",
+    contact_subtitle:
+      "Ingin bekerja sama atau sekadar bertanya? Silakan isi formulir di bawah ini atau hubungi kami melalui informasi berikut.",
 
     form_name_label: "Nama Lengkap",
     form_name_ph: "Masukkan nama Anda",
@@ -504,6 +525,7 @@ const translations = {
     nav_about: "About",
     nav_gallery: "Gallery",
     nav_contact: "Contact",
+    nav_wisata: "Tourism",
 
     hero1_title: "Sunar Gamelan",
     hero1_subtitle: "Harmony of the Archipelago — Music, Culture, Togetherness",
@@ -529,7 +551,8 @@ const translations = {
     gallery_more: "See More",
 
     contact_title: "Contact Us",
-    contact_subtitle: "Want to collaborate or just ask something? Fill out the form below or reach us through the information provided.",
+    contact_subtitle:
+      "Want to collaborate or just ask something? Fill out the form below or reach us through the information provided.",
 
     form_name_label: "Full Name",
     form_name_ph: "Enter your name",
@@ -586,7 +609,9 @@ function applyTranslations(lang) {
 
   // update title halaman juga
   const titleEl = document.querySelector("title[data-i18n='page_title']");
-  if (titleEl) titleEl.textContent = translations?.[lang]?.page_title || titleEl.textContent;
+  if (titleEl)
+    titleEl.textContent =
+      translations?.[lang]?.page_title || titleEl.textContent;
 }
 
 function setLanguage(lang) {
@@ -597,7 +622,9 @@ function setLanguage(lang) {
   translateGalleryOnly();
 
   // HANYA jalankan filter kalau memang di halaman galeri lengkap
-  const isGalleryPage = !!document.getElementById("filterKategori") || !!document.getElementById("gallery-container-full");
+  const isGalleryPage =
+    !!document.getElementById("filterKategori") ||
+    !!document.getElementById("gallery-container-full");
 
   if (isGalleryPage) {
     applyFilters();
